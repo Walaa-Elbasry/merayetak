@@ -4,210 +4,263 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>مرايتك</title>
-<style>:root{color-scheme:light dark}*{-webkit-tap-highlight-color:transparent}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>:root{color-scheme:light dark}*{-webkit-tap-highlight-color:transparent}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
 <style>
-/* Layout: one centered column (max 560px) that swaps between three screens: who are you, questions, report. Four classical elements carry the color. */
+/* Layout: one centered column (max 560px) swapping three screens: who are you, 15 questions, hero card. Each personality has an element, an animal and a color. */
 :root{
-  --bg:#ECEEE9; --surface:#F8F9F6; --ink:#1A2120; --muted:#5B6661; --line:#D2D7D1;
-  --fire:#CF4419; --water:#1B7398; --air:#7451BD; --earth:#62731F;
-  --accent:var(--ink);
+  --bg:#EEF3FA; --surface:#FFFFFF; --ink:#1B2140; --muted:#5D6685; --line:#D6DDEB;
+  --fire:#F2582A; --water:#1597D6; --air:#1BA56A; --earth:#D08C00;
+  --accent:#5B4BDB; --accent-soft:rgba(91,75,219,.12);
   --display:"Lalezar","Noto Kufi Arabic","Noto Sans Arabic",system-ui,sans-serif;
-  --body:"IBM Plex Sans Arabic","Noto Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --body:"Baloo Bhaijaan 2","Noto Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --emoji:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#111514; --surface:#1A1F1D; --ink:#E8EDE9; --muted:#97A29C; --line:#2C3431;
-  --fire:#F06A40; --water:#4EAED3; --air:#A88AEC; --earth:#A9BD5C; color-scheme:dark}}
+  --bg:#121831; --surface:#1C2443; --ink:#F1F4FF; --muted:#A3ABCB; --line:#2E3860;
+  --fire:#FF7A4D; --water:#45B6EC; --air:#3CCB8A; --earth:#F0AE2E; --accent:#8D80FF; --accent-soft:rgba(141,128,255,.16); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#111514; --surface:#1A1F1D; --ink:#E8EDE9; --muted:#97A29C; --line:#2C3431;
-  --fire:#F06A40; --water:#4EAED3; --air:#A88AEC; --earth:#A9BD5C; color-scheme:dark}
+  --bg:#121831; --surface:#1C2443; --ink:#F1F4FF; --muted:#A3ABCB; --line:#2E3860;
+  --fire:#FF7A4D; --water:#45B6EC; --air:#3CCB8A; --earth:#F0AE2E; --accent:#8D80FF; --accent-soft:rgba(141,128,255,.16); color-scheme:dark}
 html,body{background:var(--bg);color:var(--ink)}
-body{font-family:var(--body);font-size:16px;line-height:1.65}
-.app{max-width:560px;margin:0 auto;padding-inline:18px;padding-block:20px 40px;display:flex;flex-direction:column;gap:20px}
-.app[data-el=fire]{--accent:var(--fire)} .app[data-el=water]{--accent:var(--water)}
-.app[data-el=air]{--accent:var(--air)} .app[data-el=earth]{--accent:var(--earth)}
+body{font-family:var(--body);font-size:17px;line-height:1.6}
+.app{max-width:560px;margin:0 auto;padding-inline:18px;padding-block:18px 48px;display:flex;flex-direction:column;gap:20px}
+.app[data-el=fire]{--accent:var(--fire);--accent-soft:color-mix(in srgb,var(--fire) 14%,transparent)}
+.app[data-el=water]{--accent:var(--water);--accent-soft:color-mix(in srgb,var(--water) 14%,transparent)}
+.app[data-el=air]{--accent:var(--air);--accent-soft:color-mix(in srgb,var(--air) 14%,transparent)}
+.app[data-el=earth]{--accent:var(--earth);--accent-soft:color-mix(in srgb,var(--earth) 16%,transparent)}
 h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.25;text-wrap:balance;margin:0}
 p{margin:0}
-.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:13px;letter-spacing:.02em}
-.brand b{font-family:var(--display);font-weight:400;font-size:22px;color:var(--ink)}
-.glyphs{display:flex;gap:6px}
-.g{width:22px;height:22px;display:block}
-.g path{fill:none;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
-.g-fire path{stroke:var(--fire)} .g-water path{stroke:var(--water)} .g-air path{stroke:var(--air)} .g-earth path{stroke:var(--earth)}
-.screen{display:flex;flex-direction:column;gap:22px}
-.intro h1{font-size:clamp(40px,11vw,60px)}
-.intro .lede{color:var(--muted);max-width:42ch}
-.elements{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.el{display:flex;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);min-width:0}
-.el .g{width:30px;height:30px;flex:none}
-.el span{font-size:14px;color:var(--muted);line-height:1.35}
-.el strong{display:block;color:var(--ink);font-size:15px}
-.form{display:flex;flex-direction:column;gap:14px}
-label{font-weight:500;font-size:14px}
+.em{font-family:var(--emoji);font-style:normal;line-height:1}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand b{font-family:var(--display);font-weight:400;font-size:24px}
+.animals{display:flex;gap:4px;font-size:22px}
+.screen{display:flex;flex-direction:column;gap:20px}
+/* intro */
+.intro h1{font-size:clamp(36px,10vw,54px)}
+.intro h1 span{color:var(--accent)}
+.lede{color:var(--muted);max-width:42ch}
+.team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mate{display:flex;gap:10px;align-items:center;padding:12px;border-radius:16px;background:var(--surface);min-width:0;border:2px solid transparent}
+.mate .em{font-size:34px;flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center}
+.mate strong{display:block;font-size:16px;line-height:1.3}
+.mate small{color:var(--muted);font-size:13px;line-height:1.3;display:block}
+.m-fire .em{background:color-mix(in srgb,var(--fire) 16%,transparent)} .m-water .em{background:color-mix(in srgb,var(--water) 16%,transparent)}
+.m-air .em{background:color-mix(in srgb,var(--air) 16%,transparent)} .m-earth .em{background:color-mix(in srgb,var(--earth) 18%,transparent)}
+.form{display:flex;flex-direction:column;gap:14px;background:var(--surface);padding:16px;border-radius:20px}
+label{font-weight:700;font-size:15px}
 .field{display:flex;flex-direction:column;gap:6px}
-input[type=text]{font:inherit;font-size:17px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);width:100%;box-sizing:border-box}
-input[type=text]:focus{outline:none;border-color:var(--ink)}
-.photo-pick{display:flex;align-items:center;gap:14px;padding:12px;border:1.5px dashed var(--line);border-radius:12px;cursor:pointer;background:var(--surface)}
-.photo-pick:focus-within{border-color:var(--ink)}
-.avatar{width:64px;height:64px;border-radius:50%;flex:none;background:var(--bg);display:grid;place-items:center;overflow:hidden;font-family:var(--display);font-size:28px;color:var(--muted)}
+input[type=text]{font:inherit;font-size:18px;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+input[type=text]:focus{outline:none;border-color:var(--accent)}
+.photo-pick{display:flex;align-items:center;gap:14px;padding:12px;border:2px dashed var(--line);border-radius:16px;cursor:pointer}
+.photo-pick:focus-within{border-color:var(--accent)}
+.avatar{width:66px;height:66px;border-radius:50%;flex:none;background:var(--bg);display:grid;place-items:center;overflow:hidden;font-family:var(--display);font-size:30px;color:var(--muted)}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.photo-pick small{display:block;color:var(--muted);font-size:13px}
+.photo-pick small{display:block;color:var(--muted);font-size:14px}
 .sr{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
-.btn{font:inherit;font-weight:700;font-size:17px;border:0;border-radius:12px;padding:14px 18px;cursor:pointer;background:var(--ink);color:var(--bg);min-height:52px}
-.btn:disabled{opacity:.35;cursor:not-allowed}
-.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-.btn.acc{background:var(--accent);color:#fff}
-.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.hint{font-size:13px;color:var(--muted)}
+.btn{font:inherit;font-weight:700;font-size:19px;border:0;border-radius:16px;padding:13px 18px;cursor:pointer;background:var(--accent);color:#fff;min-height:56px;box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 60%,#000);transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.alt{background:var(--surface);color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.hint{font-size:14px;color:var(--muted)}
 /* quiz */
 .qtop{display:flex;align-items:center;gap:12px}
-.back{font:inherit;background:none;border:0;color:var(--muted);cursor:pointer;padding:6px 0;font-size:14px}
+.back{font:inherit;background:none;border:0;color:var(--muted);cursor:pointer;padding:6px 0;font-size:15px}
 .back:disabled{visibility:hidden}
-.count{margin-inline-start:auto;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
-.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--ink);border-radius:3px;transition:width .35s ease}
-.q{font-size:clamp(28px,7.4vw,38px)}
+.count{margin-inline-start:auto;font-weight:700;font-variant-numeric:tabular-nums}
+.track{position:relative;height:14px;border-radius:7px;background:var(--surface);overflow:hidden}
+.track i{position:absolute;inset-block:0;inset-inline-start:0;background:var(--accent);border-radius:7px;transition:width .4s cubic-bezier(.3,1.4,.6,1)}
+.cheer{align-self:flex-start;background:var(--accent-soft);color:var(--ink);font-weight:700;padding:6px 14px;border-radius:999px;font-size:15px}
+.q{font-size:clamp(28px,7.6vw,38px)}
 .opts{display:flex;flex-direction:column;gap:10px}
-.opt{font:inherit;text-align:start;display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:border-color .15s,transform .15s}
-.opt:hover{border-color:var(--muted)}
-.opt:active{transform:scale(.99)}
-.opt .k{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:14px;color:var(--muted)}
-.opt.sel{border-color:var(--ink)} .opt.sel .k{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.fade{animation:fade .3s ease both}
-@keyframes fade{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}
+.opt{font:inherit;font-size:18px;text-align:start;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:0 3px 0 var(--line);transition:transform .12s,border-color .12s}
+.opt .em{flex:none;font-size:28px;width:48px;height:48px;border-radius:14px;background:var(--bg);display:grid;place-items:center}
+.opt:hover{border-color:var(--accent)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft);animation:pop .25s ease}
+@keyframes pop{50%{transform:scale(1.03)}}
+.fade{animation:fade .35s ease both}
+@keyframes fade{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* thinking */
+.thinking{align-items:center;text-align:center;padding-block:60px}
+.spin{display:flex;gap:10px;font-size:44px}
+.spin span{animation:hop .9s ease-in-out infinite}
+.spin span:nth-child(2){animation-delay:.12s}.spin span:nth-child(3){animation-delay:.24s}.spin span:nth-child(4){animation-delay:.36s}
+@keyframes hop{50%{transform:translateY(-16px)}}
 /* result */
-.hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-block:8px}
-.hero .avatar{width:120px;height:120px;font-size:52px;box-shadow:0 0 0 4px var(--bg),0 0 0 7px var(--accent)}
-.hero .who{font-size:15px;color:var(--muted)}
-.hero h2{font-size:clamp(34px,9vw,46px);color:var(--accent);display:flex;align-items:center;gap:10px}
-.hero h2 .g{width:34px;height:34px}
-.hero .tag{font-size:18px;max-width:32ch}
-.mix{font-size:14px;color:var(--muted)}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.card h3{font-size:20px}
-.meters{display:flex;flex-direction:column;gap:10px}
-.meter{display:grid;grid-template-columns:76px 1fr 44px;gap:10px;align-items:center;font-size:14px}
-.meter .track{height:10px;border-radius:5px;background:var(--bg);overflow:hidden}
-.meter .fill{height:100%;border-radius:5px}
-.meter .v{font-variant-numeric:tabular-nums;text-align:end;color:var(--muted)}
+.hero{position:relative;background:var(--accent);color:#fff;border-radius:26px;padding:22px 18px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.13)}
+.hero::before{width:220px;height:220px;top:-90px;inset-inline-end:-70px}
+.hero::after{width:140px;height:140px;bottom:-60px;inset-inline-start:-40px}
+.hero > *{position:relative}
+.cardlabel{font-size:14px;letter-spacing:.08em;opacity:.9;font-weight:700}
+.pic{position:relative;width:132px;height:132px}
+.pic .avatar{width:132px;height:132px;font-size:58px;background:rgba(255,255,255,.2);color:#fff;box-shadow:0 0 0 5px #fff}
+.badge{position:absolute;bottom:-6px;inset-inline-start:-10px;width:58px;height:58px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:34px;box-shadow:0 3px 10px rgba(0,0,0,.18)}
+.hero .nm{font-size:20px;font-weight:700;margin-top:6px}
+.hero h2{font-size:clamp(36px,10vw,50px)}
+.hero .tag{font-size:18px;max-width:30ch;opacity:.95}
+.card{background:var(--surface);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card h3{font-size:22px;display:flex;align-items:center;gap:8px}
+.card h3 .em{font-size:24px}
+.stats{display:flex;flex-direction:column;gap:12px}
+.stat{display:grid;grid-template-columns:96px 1fr 46px;gap:10px;align-items:center;font-weight:500}
+.stat .bar{height:16px;border-radius:8px;background:var(--bg);overflow:hidden}
+.stat .fill{height:100%;border-radius:8px;width:0;transition:width 1s cubic-bezier(.3,1.2,.5,1)}
+.stat .v{font-variant-numeric:tabular-nums;text-align:end;font-weight:700}
+.power{background:var(--accent-soft);border:2px solid var(--accent)}
+.power p{font-size:19px;font-weight:500}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{padding:5px 12px;border-radius:999px;border:1.5px solid var(--accent);color:var(--accent);font-weight:500;font-size:14px}
+.chip{padding:4px 14px;border-radius:999px;background:var(--accent-soft);color:var(--ink);font-weight:700;font-size:16px}
 .grid2{display:grid;grid-template-columns:1fr;gap:12px}
 @media (min-width:540px){.grid2{grid-template-columns:1fr 1fr}}
-ul.list{margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:4px}
-.advice{border:0;background:var(--accent);color:#fff}
-.advice p{font-size:19px;font-weight:500}
-.advice h3{opacity:.85;font-size:16px}
-.actions{display:flex;flex-direction:column;gap:10px}
+ul.list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.list li{display:flex;gap:8px}
+ul.list li::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:9px}
+ul.list.soft li::before{background:var(--line)}
+.mate-card{display:flex;align-items:center;gap:14px}
+.mate-card .em{font-size:44px}
+.challenge{border:2px dashed var(--accent)}
+.accept{align-self:flex-start;font:inherit;font-weight:700;border:2px solid var(--accent);background:transparent;color:var(--ink);border-radius:999px;padding:6px 16px;cursor:pointer}
+.accept[aria-pressed=true]{background:var(--accent);color:#fff}
+.motto{text-align:center;padding-block:8px}
+.motto p{font-family:var(--display);font-size:clamp(30px,8vw,40px);color:var(--accent)}
+.motto small{color:var(--muted)}
+.actions{display:flex;flex-direction:column;gap:12px}
 .report-box{display:flex;flex-direction:column;gap:10px;align-items:center}
-.report-box img{width:100%;max-width:360px;border-radius:12px;border:1px solid var(--line)}
-.toast{position:fixed;inset-inline:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));max-width:420px;margin:0 auto;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:10px;text-align:center;font-weight:500;z-index:5}
+.report-box img{width:100%;max-width:360px;border-radius:16px}
+.toast{position:fixed;inset-inline:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));max-width:420px;margin:0 auto;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:14px;text-align:center;font-weight:700;z-index:5}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:4;width:100%;height:100%}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
 <div class="app" id="app" dir="rtl" lang="ar">
-  <div class="brand"><b>مرايتك</b><span class="glyphs" id="brandGlyphs"></span></div>
+  <div class="brand"><b>مرايتك</b><span class="animals em" id="brandAnimals"></span></div>
 
   <section class="screen intro" id="s-intro">
-    <h1>اعرف نفسك في ١٠ أسئلة</h1>
-    <p class="lede">جاوب بأول حاجة تيجي في بالك. كل إجابة بتقرّبك من عنصر من العناصر الأربعة، وفي الآخر هيطلعلك تقرير تحليلي بصورتك واسمك.</p>
-    <div class="elements" id="elList"></div>
+    <h1>إنت مين من <span>الأبطال الأربعة</span>؟</h1>
+    <p class="lede">١٥ سؤال سريع. جاوب بأول حاجة تيجي في بالك، مفيش إجابة صح وغلط. في الآخر هيطلعلك كارت البطل بتاعك بصورتك واسمك.</p>
+    <div class="team" id="team"></div>
     <form class="form" id="whoForm" novalidate>
       <div class="field">
-        <label for="nameIn">اسمك</label>
-        <input type="text" id="nameIn" autocomplete="given-name" maxlength="30" placeholder="مثلاً: سارة">
+        <label for="nameIn">اسمك إيه؟</label>
+        <input type="text" id="nameIn" autocomplete="given-name" maxlength="24" placeholder="اكتب اسمك هنا">
       </div>
       <label class="photo-pick" for="photoIn">
         <span class="avatar" id="avPrev">؟</span>
-        <span><strong>صورتك الشخصية</strong><small id="photoNote">اضغط واختار صورة، هتظهر في التقرير</small></span>
+        <span><strong>حط صورتك</strong><small id="photoNote">هتظهر على كارت البطل بتاعك (اختياري)</small></span>
         <input type="file" id="photoIn" class="sr" accept="image/*">
       </label>
-      <button class="btn" id="startBtn" type="submit" disabled>ابدأ الاختبار</button>
-      <p class="hint">الصورة بتفضل على جهازك، مش بتتبعت لأي مكان.</p>
+      <button class="btn" id="startBtn" type="submit" disabled>يلا نبدأ!</button>
+      <p class="hint">الصورة بتفضل على جهازك ومش بتتبعت لأي حد.</p>
     </form>
   </section>
 
   <section class="screen" id="s-quiz" hidden>
     <div class="qtop">
-      <button class="back" id="backBtn" type="button">→ السؤال اللي فات</button>
+      <button class="back" id="backBtn" type="button">→ رجوع</button>
       <span class="count" id="count"></span>
     </div>
-    <div class="bar"><i id="prog"></i></div>
-    <div class="fade" id="qWrap">
-      <h2 class="q" id="qText"></h2>
-    </div>
+    <div class="track"><i id="prog"></i></div>
+    <span class="cheer" id="cheer" hidden></span>
+    <div class="fade" id="qWrap"><h2 class="q" id="qText"></h2></div>
     <div class="opts" id="opts"></div>
+  </section>
+
+  <section class="screen thinking" id="s-think" hidden>
+    <div class="spin em"><span>🦁</span><span>🐬</span><span>🦎</span><span>🦉</span></div>
+    <h2>بنحلل إجاباتك…</h2>
+    <p class="hint">ثواني ونطلعلك البطل اللي جواك</p>
   </section>
 
   <section class="screen" id="s-result" hidden></section>
 </div>
+<canvas id="confetti" hidden></canvas>
 <div class="toast" id="toast" hidden></div>
 
 <script>
 document.documentElement.dir='rtl';document.documentElement.lang='ar';
-const GLYPH={fire:'M12 3 L21.5 20 L2.5 20 Z',water:'M12 21 L21.5 4 L2.5 4 Z',
- air:'M12 3 L21.5 20 L2.5 20 Z M6.2 13.4 L17.8 13.4',earth:'M12 21 L21.5 4 L2.5 4 Z M6.2 10.6 L17.8 10.6'};
-const svg=(el,cls='')=>`<svg class="g g-${el} ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${GLYPH[el]}"/></svg>`;
 const ORDER=['fire','water','air','earth'];
 const T={
- fire:{name:'النار',title:'القائد الجريء',tag:'بتاخد القرار وتمشي، والناس بتمشي وراك.',
-  traits:['حاسم','جريء','صريح','بيحب التحدي'],
-  strong:['بتتحرك بسرعة وقت الأزمات','بتشجّع اللي حواليك وتشدّهم لقدّام','مش بتهرب من المسؤولية'],
-  watch:['ساعات بتستعجل في الحكم على الناس','صراحتك ممكن تجرح من غير ما تقصد','الصبر مش أقوى حاجة عندك'],
-  work:'مكانك الطبيعي في القيادة وإدارة المشاريع اللي فيها ضغط ونتايج واضحة.',
-  love:'بتحب بوضوح وبتحمي اللي بتحبهم. اسمع أكتر ما تتكلم وهتكسب قلوب أكتر.',
-  match:'water',matchWhy:'بيهدّيك ويفكّرك إن الناس أهم من السرعة.',
-  advice:'مش كل معركة لازم تكسبها. اختار معاركك.'},
- water:{name:'الميّة',title:'الحنون المتعاطف',tag:'بتحس بالناس قبل ما يتكلموا.',
-  traits:['متعاطف','وفي','مستمع كويس','هادي'],
-  strong:['بتفهم مشاعر اللي قدامك بسرعة','بتعرف تصالح وتجمع الناس','وفي جدًا ومش بتتخلى عن حد'],
-  watch:['بتشيل همّ غيرك أكتر من همّك','صعب عليك تقول لأ','الكلام بيأثر فيك أكتر من اللازم'],
-  work:'بتلمع في أي مكان فيه ناس: تعليم، دعم، موارد بشرية، علاج، خدمة عملاء.',
-  love:'بتدّي كتير ومن قلبك. اتأكد إن اللي قدامك بيدّي زيك.',
-  match:'earth',matchWhy:'بيديك أمان وثبات وبيشيل معاك.',
-  advice:'قول لأ من غير ما تحس بالذنب. راحتك مش أنانية.'},
- air:{name:'الهوا',title:'المبدع الحالم',tag:'دماغك دايمًا شغالة بفكرة جديدة.',
-  traits:['خيالي','فضولي','حر','بيحب التغيير'],
-  strong:['بتشوف حلول محدش شافها','بتكسر الملل في أي مكان تدخله','بتتعلم الجديد بسرعة'],
-  watch:['بتبدأ حاجات كتير ومش بتكمّلها','الروتين بيخنقك','ساعات بتسرح في عز الكلام'],
-  work:'مكانك في التصميم، المحتوى، التسويق، أو أي شغل فيه حرية وأفكار جديدة.',
-  love:'محتاج حد يسيبلك مساحتك ويشاركك مغامراتك.',
-  match:'fire',matchWhy:'بيحوّل أفكارك لحاجة حقيقية على الأرض.',
-  advice:'الفكرة الحلوة محتاجة خطة. كمّل حاجة واحدة للآخر.'},
- earth:{name:'الأرض',title:'المنظّم العاقل',tag:'بتفكر قبل ما تتحرك، وكلامك موزون.',
-  traits:['منظّم','عملي','صبور','يُعتمد عليه'],
-  strong:['بتخطط وبتنفّذ صح','الناس بتثق فيك من غير تفكير','هادي وقت الضغط'],
-  watch:['المفاجآت بتقلقك','ساعات بتفكر زيادة عن اللزوم','صعب تجرّب حاجة جديدة'],
-  work:'بتنجح في الإدارة، الحسابات، الهندسة، وأي شغل محتاج دقة ونفَس طويل.',
-  love:'بتحب بالأفعال مش بالكلام، وثباتك أمان للي حواليك.',
-  match:'air',matchWhy:'بيضيف لحياتك ألوان وتجديد.',
-  advice:'سيب مساحة للمفاجأة. مش كل حاجة لازم تتحسب.'}
+ fire:{animal:'🦁',beast:'الأسد',title:'البطل الشجاع',stat:'شجاعة',
+  tag:'مبتخافش تبدأ، والكل بيمشي وراك!',
+  power:'التشجيع: كلمة واحدة منك بتخلّي الفريق كله يتحمّس ويكمّل.',
+  traits:['شجاع','متحمّس','قائد','سريع','صريح'],
+  shine:['بتاخد القرار بسرعة ومبتترددش','مبتستسلمش بسهولة حتى لو الحاجة صعبة','بتحب التحدي وغالبًا بتكسبه'],
+  practice:['استنى ثانية واسمع رأي صحابك قبل ما تقرر','مش لازم تكسب كل مرة، المهم إنك تستمتع'],
+  friends:'إنت اللي بتقترح اللعبة والخروجة، وصحابك بيحسوا معاك بالأمان.',
+  school:'بتحب المسابقات والأنشطة. حوّل المذاكرة لتحدي: كل درس تخلّصه نقطة ليك!',
+  future:['كابتن فريق','طيار','مدرب رياضي','رائد أعمال','رجل إطفاء'],
+  mate:'water',mateWhy:'بيهديك لما تتحمّس زيادة، وبيفكّرك إن الفريق أهم من المكسب.',
+  challenge:'اسأل ٣ من صحابك عن رأيهم في حاجة قبل ما تقرر فيها.',
+  motto:'أنا أقدر!'},
+ water:{animal:'🐬',beast:'الدولفين',title:'صاحب القلب الكبير',stat:'طيبة',
+  tag:'بتحس بالناس قبل ما يتكلموا، وكلامك بيطبطب.',
+  power:'الطبطبة: بتعرف تفرّح أي حد زعلان في دقيقة.',
+  traits:['طيب','وفي','مستمع','هادي','بيساعد'],
+  shine:['بتفهم مشاعر اللي قدامك بسرعة','بتصالح صحابك على بعض','وفي ومبتسيبش حد لوحده'],
+  practice:['قول "لأ" لما تكون مش مرتاح، ده حقك','متشيلش همّ الكل لوحدك، اطلب مساعدة'],
+  friends:'إنت الصاحب اللي الكل بيجيله لما يزعل، وبتخلّي الشلة متجمعة.',
+  school:'بتذاكر أحسن مع صاحب. جرّب تشرح الدرس لحد، هتفهمه أكتر!',
+  future:['دكتور','مدرّس','دكتور بيطري','أخصائي نفسي','ممرض'],
+  mate:'earth',mateWhy:'بيديك أمان وثبات، وبيشيل معاك أي حمل.',
+  challenge:'اعمل حاجة حلوة لحد من غير ما يعرف إنها منك.',
+  motto:'الطيبة قوة.'},
+ air:{animal:'🦎',beast:'الحرباية',title:'المخترع الحالم',stat:'خيال',
+  tag:'دماغك مصنع أفكار، وكل يوم عندك اختراع جديد!',
+  power:'الخيال: بتشوف حلول ماحدش شافها قبلك.',
+  traits:['مبدع','فضولي','ضحوك','مختلف','بيحب الجديد'],
+  shine:['أفكارك مش شبه حد','بتحوّل أي حاجة مملة لحاجة ممتعة','بتتعلم الحاجات الجديدة بسرعة'],
+  practice:['كمّل الحاجة اللي بدأتها للآخر','ركّز في حاجة واحدة بس في المرة'],
+  friends:'إنت اللي بتطلّع الألعاب الجديدة والنكت، ومعاك الوقت عمره ما بيبقى ممل.',
+  school:'ذاكر بالألوان والرسم والخرايط الذهنية، دماغك بتحب الصور!',
+  future:['مصمم','مخترع','رسّام','صانع ألعاب','مخرج'],
+  mate:'fire',mateWhy:'بيحوّل أفكارك لحاجة حقيقية على الأرض.',
+  challenge:'اخترع حاجة من كرتون وورق قديم وصوّرها.',
+  motto:'مفيش حاجة مستحيلة.'},
+ earth:{animal:'🦉',beast:'البومة',title:'العقل المدبّر',stat:'تنظيم',
+  tag:'بتفكر قبل ما تتحرك، والكل بيثق في كلامك.',
+  power:'التخطيط: بتوصل لأي هدف خطوة بخطوة.',
+  traits:['منظّم','ذكي','صبور','هادي','يُعتمد عليه'],
+  shine:['بتخلّص اللي عليك في ميعاده','الكل بيثق فيك من غير تفكير','بتفضل هادي حتى لو الدنيا مكركبة'],
+  practice:['جرّب حاجة جديدة حتى لو مش متخطط لها','الغلط عادي، كلنا بنتعلم منه'],
+  friends:'إنت الصاحب اللي بيفتكر المواعيد، وعنده حل لكل مشكلة.',
+  school:'إنت بطل الجداول! اعمل جدول مذاكرة بالألوان وكافئ نفسك بعد كل جزء.',
+  future:['مهندس','عالِم','مبرمج','محقق','معماري'],
+  mate:'air',mateWhy:'بيضيف لحياتك ألوان ومفاجآت حلوة.',
+  challenge:'اعمل حاجة واحدة النهارده من غير أي تخطيط!',
+  motto:'خطوة بخطوة بوصل.'}
 };
 const Q=[
- ['جالك يوم إجازة فجأة، هتعمل إيه؟',{fire:'أخطط لخروجة وألمّ الشلة',water:'أكلّم حد وحشني وأقعد معاه',air:'أروح مكان أول مرة أشوفه',earth:'أخلّص الحاجات المتأجلة وأرتّب أوضتي'}],
- ['شغل جماعي والفريق تايه، دورك إيه؟',{fire:'أمسك الدفة وأوزّع المهام',water:'أطمّن الناس وأخليهم مرتاحين',air:'أطلع بفكرة مختلفة تقلب الموضوع',earth:'أعمل جدول وخطة خطوة بخطوة'}],
- ['صاحبك زعلان ومش عايز يتكلم:',{fire:'أقوله "قوم معايا" وأخرّجه من الجو ده',water:'أقعد جنبه وأستنى لحد ما يفتح قلبه',air:'أبعتله حاجة تضحّكه',earth:'أسأله بهدوء إيه المشكلة ونفكر في حل'}],
- ['لو هتختار مكان تعيش فيه:',{fire:'وسط البلد، دوشة وحركة طول اليوم',water:'بيت عيلة كبير قريب من حبايبي',air:'شقة صغيرة فوق السطح بمنظر حلو',earth:'مكان هادي ومنظّم وكل حاجة قريبة'}],
- ['حد انتقدك قدام الناس:',{fire:'أرد عليه في ساعتها',water:'أسكت بس الكلام يفضل في بالي',air:'أضحك وأعدّيها بنكتة',earth:'أسمع كويس وأقرر بعدين إذا كان عنده حق'}],
- ['مشروبك المفضل:',{fire:'قهوة سادة تقيلة',water:'شاي بلبن في البيت مع العيلة',air:'حاجة جديدة من المنيو أول مرة أجربها',earth:'نفس المشروب كل مرة، المضمون مضمون'}],
- ['قدامك قرار كبير:',{fire:'أمشي ورا إحساسي وأقرر بسرعة',water:'أفكر هيأثر على اللي حواليا إزاي',air:'أتخيل كل الاحتمالات المجنونة الأول',earth:'أكتب المميزات والعيوب وأقارن'}],
- ['في السفر، إنت الشخص اللي:',{fire:'بيحدد البرنامج ويصحّي الكل بدري',water:'بيتأكد إن الكل مبسوط وواكل',air:'بيتوه عشان شاف شارع شكله حلو',earth:'معاه شاحن وأدوية ونسخة من كل الورق'}],
- ['إيه أكتر حاجة بتضايقك؟',{fire:'البطء والتردد',water:'إن حد يكون قاسي على حد',air:'الروتين والتكرار',earth:'الفوضى وعدم الالتزام بالمواعيد'}],
- ['الناس بتوصفك إزاي؟',{fire:'"جدع وبيعرف ياخد قرار"',water:'"قلبه أبيض وبيسمع"',air:'"دماغه حلوة ومختلف"',earth:'"عاقل ويُعتمد عليه"'}]
+ ['أول ما تصحى يوم الإجازة بتعمل إيه؟',{fire:['⚽','أنزل ألعب مع صحابي على طول'],water:['🍳','أقعد مع العيلة ونفطر سوا'],air:['🎨','أرسم أو أبني حاجة جديدة'],earth:['📋','أرتب يومي وأشوف هعمل إيه']}],
+ ['المدرس قال هتعملوا مشروع جماعي. دورك إيه؟',{fire:['💪','أقسّم الشغل وأقول: يلا يا جماعة!'],water:['🤝','أتأكد إن مفيش حد متساب لوحده'],air:['💡','أنا صاحب الأفكار المجنونة'],earth:['🗓️','أكتب الخطة وأتابع المواعيد']}],
+ ['لو معاك قوة خارقة، تختار إيه؟',{fire:['⚡','قوة وسرعة البرق'],water:['💚','إني أعالج أي حد تعبان'],air:['🪽','إني أطير وأروح أي مكان'],earth:['📚','إني أعرف كل حاجة في الكتب']}],
+ ['صاحبك زعلان في الفسحة. هتعمل إيه؟',{fire:['🏃','أقوله: قوم نلعب وننسى'],water:['🫶','أقعد جنبه وأسمعه'],air:['🤪','أعمل حركة تضحّكه'],earth:['🧩','أسأله إيه اللي حصل ونلاقي حل']}],
+ ['أنهي نوع ألعاب بتحبه أكتر؟',{fire:['🏆','أي لعبة فيها سباق ومكسب'],water:['🎲','لعبة نلعبها كلنا مع بعض'],air:['🧱','لعبة أبني فيها عالم من خيالي'],earth:['♟️','الألغاز والشطرنج']}],
+ ['رايحين رحلة مع المدرسة:',{fire:['🚌','أول واحد في الأتوبيس وقاعد قدام'],water:['🥪','بشارك أكلي مع الكل'],air:['🔍','بلاقي أماكن محدش خد باله منها'],earth:['🎒','معايا كل حاجة: مية ومناديل وشاحن']}],
+ ['أوضتك شكلها عامل إزاي؟',{fire:['🏅','مليانة كور وميداليات'],water:['🖼️','صور صحابي وعيلتي في كل حتة'],air:['🖍️','ألوان ورسومات ومشاريع لسه مكملتهاش'],earth:['✨','مترتبة وكل حاجة في مكانها']}],
+ ['الواجب كتير النهارده:',{fire:['⏱️','أخلّصه بسرعة عشان ألحق ألعب'],water:['👫','أذاكر مع صاحبي ونساعد بعض'],air:['🎧','أذاكر بطريقتي الخاصة وأغيّر مكاني'],earth:['✅','أقسّمه حتت صغيرة وأمشي بالترتيب']}],
+ ['لو هتربي حيوان أليف، هتختار:',{fire:['🐕','كلب كبير نجري ونلعب سوا'],water:['🐈','قطة صغيرة أحضنها'],air:['🦜','ببغاء بيتكلم ويقلّد الناس'],earth:['🐢','سلحفاة هادية وعمرها طويل']}],
+ ['نفسك عيد ميلادك يبقى عامل إزاي؟',{fire:['🎉','حفلة كبيرة وأنا نجمها'],water:['🎂','لمّة حلوة مع اللي بحبهم'],air:['🎁','مفاجأة غريبة محدش عملها قبل كده'],earth:['🗒️','يوم متخطط بالظبط زي ما أنا عايز']}],
+ ['لما بتغلط في حاجة:',{fire:['🔁','أقوم بسرعة وأحاول تاني'],water:['🙏','أعتذر لو زعّلت حد'],air:['😅','أضحك وأتعلم حاجة جديدة'],earth:['🧠','أفكر غلطت فين عشان مكررهاش']}],
+ ['لو هتعمل فيديو، هيبقى عن إيه؟',{fire:['🎬','تحديات ومغامرات'],water:['🌈','حاجات تفرّح الناس وتساعدهم'],air:['🚀','اختراعات ورسم وأفكار غريبة'],earth:['🎓','شرح حاجات مفيدة خطوة بخطوة']}],
+ ['اتأخرتوا على ماتش مهم والطريق زحمة:',{fire:['📣','أقترح طريق تاني ونجري'],water:['🙂','أهدّي الكل وأقول مش مشكلة'],air:['🎤','أعمل مسابقة في العربية لحد ما نوصل'],earth:['🗺️','أفتح الخريطة وأحسب الوقت']}],
+ ['أكتر حاجة بتضايقك؟',{fire:['😣','إني أخسر أو أستنى كتير'],water:['😢','إن حد يتريّق على حد'],air:['😴','إني أعمل نفس الحاجة كل يوم'],earth:['⏰','الكركبة والمواعيد اللي بتتأخر']}],
+ ['صحابك بيقولوا عليك إيه؟',{fire:['💥','"ده شجاع ومبيخافش"'],water:['💗','"قلبه طيب وبيسمعنا"'],air:['🌀','"دماغه حلوة ومختلف"'],earth:['🛡️','"عاقل ونعتمد عليه"']}]
 ];
+const CHEERS={4:'عاش! خلّصت تُلت الطريق ⭐',9:'فاضل ٥ بس! كمّل يا بطل 🚀',13:'آخر سؤالين! 🏁'};
 const ar=n=>Number(n).toLocaleString('ar-EG');
 const $=id=>document.getElementById(id);
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let S={screen:'intro',name:'',photo:null,i:0,answers:[],orders:Q.map(()=>shuffle(ORDER))};
 
 /* intro */
-$('brandGlyphs').innerHTML=ORDER.map(e=>svg(e)).join('');
-$('elList').innerHTML=ORDER.map(e=>`<div class="el">${svg(e)}<span><strong>${T[e].name}</strong>${T[e].title}</span></div>`).join('');
+$('brandAnimals').textContent=ORDER.map(e=>T[e].animal).join('');
+$('team').innerHTML=ORDER.map(e=>`<div class="mate m-${e}"><span class="em">${T[e].animal}</span><span><strong>${T[e].beast}</strong><small>${T[e].title}</small></span></div>`).join('');
 const nameIn=$('nameIn'),startBtn=$('startBtn');
-function refreshStart(){S.name=nameIn.value.trim();startBtn.disabled=!S.name;
-  if(!S.photo)$('avPrev').textContent=S.name?S.name[0]:'؟'}
+function refreshStart(){S.name=nameIn.value.trim();startBtn.disabled=!S.name;if(!S.photo)$('avPrev').textContent=S.name?S.name[0]:'؟'}
 nameIn.addEventListener('input',refreshStart);
 $('photoIn').addEventListener('change',e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;
@@ -216,33 +269,36 @@ $('photoIn').addEventListener('change',e=>{
       const c=document.createElement('canvas'),s=Math.min(img.width,img.height),o=480;
       c.width=c.height=o;c.getContext('2d').drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,o,o);
       S.photo=c.toDataURL('image/jpeg',.88);
-      $('avPrev').innerHTML=`<img src="${S.photo}" alt="">`;$('photoNote').textContent='تمام، اضغط تاني لو عايز تغيّرها';};
+      $('avPrev').innerHTML=`<img src="${S.photo}" alt="">`;$('photoNote').textContent='حلوة! اضغط تاني لو عايز تغيّرها';};
     img.src=r.result};
   r.readAsDataURL(f)});
 $('whoForm').addEventListener('submit',e=>{e.preventDefault();if(!nameIn.value.trim())return;refreshStart();S.i=0;S.answers=[];S.orders=Q.map(()=>shuffle(ORDER));go('quiz')});
 
 function go(screen){S.screen=screen;
-  ['intro','quiz','result'].forEach(s=>$('s-'+s).hidden=s!==screen);
+  ['intro','quiz','think','result'].forEach(s=>$('s-'+s).hidden=s!==screen);
   if(screen==='quiz')renderQ();
   if(screen==='result')renderResult();
-  if(screen==='intro'){$('app').removeAttribute('data-el')}
+  if(screen==='intro')$('app').removeAttribute('data-el');
   window.scrollTo(0,0)}
 
 /* quiz */
-const LET=['أ','ب','ج','د'];
 function renderQ(){
   const [text,opts]=Q[S.i];
-  $('count').textContent=`سؤال ${ar(S.i+1)} من ${ar(Q.length)}`;
-  $('prog').style.width=(S.i/Q.length*100)+'%';
+  $('count').textContent=`${ar(S.i+1)} / ${ar(Q.length)}`;
+  $('prog').style.width=Math.max(4,S.i/Q.length*100)+'%';
   $('backBtn').disabled=S.i===0;
+  const ch=CHEERS[S.i];$('cheer').hidden=!ch;if(ch)$('cheer').textContent=ch;
   const w=$('qWrap');w.classList.remove('fade');void w.offsetWidth;w.classList.add('fade');
   $('qText').textContent=text;
-  $('opts').innerHTML=S.orders[S.i].map((el,k)=>`<button class="opt fade${S.answers[S.i]===el?' sel':''}" type="button" data-el="${el}"><span class="k">${LET[k]}</span><span>${opts[el]}</span></button>`).join('');
+  $('opts').innerHTML=S.orders[S.i].map(el=>`<button class="opt fade${S.answers[S.i]===el?' sel':''}" type="button" data-el="${el}"><span class="em">${opts[el][0]}</span><span>${opts[el][1]}</span></button>`).join('');
 }
+let busy=false;
 $('opts').addEventListener('click',e=>{
-  const b=e.target.closest('.opt');if(!b)return;
-  S.answers[S.i]=b.dataset.el;b.classList.add('sel');
-  setTimeout(()=>{if(S.i<Q.length-1){S.i++;renderQ()}else{$('prog').style.width='100%';go('result')}},220)});
+  const b=e.target.closest('.opt');if(!b||busy)return;busy=true;
+  S.answers[S.i]=b.dataset.el;$('opts').querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));b.classList.add('sel');
+  setTimeout(()=>{busy=false;
+    if(S.i<Q.length-1){S.i++;renderQ()}
+    else{$('prog').style.width='100%';go('think');setTimeout(()=>go('result'),1600)}},260)});
 $('backBtn').addEventListener('click',()=>{if(S.i>0){S.i--;renderQ()}});
 
 /* scoring */
@@ -250,141 +306,169 @@ function score(){
   const c={fire:0,water:0,air:0,earth:0},last={};
   S.answers.forEach((a,i)=>{c[a]++;last[a]=i});
   const rank=ORDER.slice().sort((a,b)=>c[b]-c[a]||(last[b]??-1)-(last[a]??-1));
-  const pct={};ORDER.forEach(e=>pct[e]=Math.round(c[e]/S.answers.length*100));
+  const pct={};let sum=0;ORDER.forEach(e=>{pct[e]=Math.round(c[e]/S.answers.length*100);sum+=pct[e]});
+  pct[rank[0]]+=100-sum;
   return {rank,pct,main:rank[0],second:rank[1]};
 }
 function mixLine(r){
-  const p=r.pct[r.main];
-  if(p>=70)return `${T[r.main].name} مسيطرة عليك بشكل واضح.`;
-  if(r.pct[r.second]>=30)return `عندك مزيج قوي: ${T[r.main].name} ومعاها ${T[r.second].name} بنسبة ${ar(r.pct[r.second])}٪، يعني ${T[r.second].traits[0]} كمان.`;
-  return `أساسك ${T[r.main].name}، وفيك لمسة من ${T[r.second].name}.`;
+  const a=T[r.main],b=T[r.second];
+  if(r.pct[r.main]>=60)return `إنت ${a.beast} أصلي ١٠٠٪! وال${a.stat} هي سلاحك الأول.`;
+  if(r.pct[r.second]>=27)return `إنت ${a.beast} بس جواك ${b.beast} كمان! عندك ${a.stat} و${b.stat} مع بعض، ودي تركيبة نادرة.`;
+  return `أساسك ${a.beast}، ومعاك لمسة ${b.stat} من ${b.beast}.`;
 }
-const avatarHTML=()=>S.photo?`<img src="${S.photo}" alt="صورة ${S.name}">`:S.name[0];
+const avatarHTML=()=>S.photo?`<img src="${S.photo}" alt="صورة ${esc(S.name)}">`:esc(S.name[0]);
 
 function renderResult(){
-  const r=score(),t=T[r.main],m=T[t.match];
+  const r=score(),t=T[r.main],m=T[t.mate];
   $('app').dataset.el=r.main;
   $('s-result').innerHTML=`
-  <div class="hero">
-    <div class="avatar">${avatarHTML()}</div>
-    <p class="who">تحليل شخصية ${esc(S.name)}</p>
-    <h2>${svg(r.main)}${t.title}</h2>
+  <div class="hero fade">
+    <span class="cardlabel">كارت البطل</span>
+    <div class="pic"><div class="avatar">${avatarHTML()}</div><span class="badge em">${t.animal}</span></div>
+    <p class="nm">${esc(S.name)}، إنت</p>
+    <h2>${t.title}</h2>
     <p class="tag">${t.tag}</p>
-    <p class="mix">${mixLine(r)}</p>
   </div>
-  <div class="card"><h3>العناصر جواك</h3><div class="meters">${r.rank.map(e=>`
-    <div class="meter"><span>${T[e].name}</span><div class="track"><div class="fill" style="width:${r.pct[e]}%;background:var(--${e})"></div></div><span class="v">${ar(r.pct[e])}٪</span></div>`).join('')}</div></div>
+  <div class="card"><h3>قدراتك</h3><p class="hint">${mixLine(r)}</p><div class="stats">${r.rank.map(e=>`
+    <div class="stat"><span>${T[e].stat}</span><div class="bar"><div class="fill" data-w="${r.pct[e]}" style="background:var(--${e})"></div></div><span class="v">${ar(r.pct[e])}٪</span></div>`).join('')}</div></div>
+  <div class="card power"><h3><span class="em">⚡</span>قوتك الخارقة</h3><p>${t.power}</p></div>
   <div class="card"><h3>صفاتك</h3><div class="chips">${t.traits.map(x=>`<span class="chip">${x}</span>`).join('')}</div></div>
   <div class="grid2">
-    <div class="card"><h3>نقط قوتك</h3><ul class="list">${t.strong.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-    <div class="card"><h3>خد بالك من</h3><ul class="list">${t.watch.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-    <div class="card"><h3>في الشغل</h3><p>${t.work}</p></div>
-    <div class="card"><h3>في العلاقات</h3><p>${t.love}</p></div>
+    <div class="card"><h3><span class="em">🌟</span>حاجات بتميّزك</h3><ul class="list">${t.shine.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="card"><h3><span class="em">🎯</span>محتاجة شوية تمرين</h3><ul class="list soft">${t.practice.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="card"><h3><span class="em">👯</span>مع صحابك</h3><p>${t.friends}</p></div>
+    <div class="card"><h3><span class="em">📖</span>في المدرسة</h3><p>${t.school}</p></div>
   </div>
-  <div class="card"><h3>أكتر حد بيكمّلك</h3><p><strong style="color:var(--${t.match})">${m.title} (${m.name})</strong>، ${t.matchWhy}</p></div>
-  <div class="card advice"><h3>نصيحتك</h3><p>${t.advice}</p></div>
+  <div class="card"><h3><span class="em">🚀</span>ممكن تبقى لما تكبر</h3><div class="chips">${t.future.map(x=>`<span class="chip">${x}</span>`).join('')}</div></div>
+  <div class="card"><h3>شريكك المثالي في الفريق</h3><div class="mate-card"><span class="em">${m.animal}</span><p><strong style="color:var(--${t.mate})">${m.beast}، ${m.title}.</strong> ${t.mateWhy}</p></div></div>
+  <div class="card challenge"><h3><span class="em">🏅</span>تحدّي الأسبوع</h3><p>${t.challenge}</p><button class="accept" id="acceptBtn" type="button" aria-pressed="false">قبلت التحدي</button></div>
+  <div class="motto"><small>شعارك</small><p>"${t.motto}"</p></div>
   <div class="actions">
-    <button class="btn acc" id="dlBtn" type="button">حمّل التقرير كصورة</button>
+    <button class="btn" id="dlBtn" type="button">حمّل كارت البطل</button>
     <div class="report-box" id="reportBox" hidden></div>
-    <button class="btn alt" id="againBtn" type="button">العب تاني</button>
+    <button class="btn alt" id="againBtn" type="button">العب تاني أو خلّي حد تاني يلعب</button>
   </div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll('.stat .fill').forEach(f=>f.style.width=f.dataset.w+'%')));
+  $('acceptBtn').onclick=e=>{const p=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',p);e.currentTarget.textContent=p?'قبلت التحدي ✓':'قبلت التحدي';if(p)confetti(60)};
   $('dlBtn').onclick=()=>makeReport(r);
-  $('againBtn').onclick=()=>go('intro');
+  $('againBtn').onclick=()=>{S.photo=null;nameIn.value='';$('avPrev').textContent='؟';$('photoNote').textContent='هتظهر على كارت البطل بتاعك (اختياري)';refreshStart();go('intro')};
+  confetti(140);
 }
-function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function toast(msg){const t=$('toast');t.textContent=msg;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,2800)}
 
-/* report image: 1080x1920 */
-const RC={fire:'#F06A40',water:'#4EAED3',air:'#A88AEC',earth:'#A9BD5C'};
+/* confetti */
+function confetti(n){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=$('confetti'),x=c.getContext('2d');c.hidden=false;
+  const W=c.width=innerWidth*devicePixelRatio,H=c.height=innerHeight*devicePixelRatio,k=devicePixelRatio;
+  const cols=['#F2582A','#1597D6','#1BA56A','#D08C00','#8D80FF','#FF4F9A'];
+  const ps=Array.from({length:n},()=>({x:W/2+(Math.random()-.5)*W*.3,y:H*.35,vx:(Math.random()-.5)*18*k,vy:(-Math.random()*16-6)*k,r:Math.random()*Math.PI,vr:(Math.random()-.5)*.4,s:(6+Math.random()*7)*k,c:''}));
+  ps.forEach((p,i)=>p.c=cols[i%6]);
+  let t0=performance.now();
+  (function f(t){x.clearRect(0,0,W,H);let alive=false;
+    ps.forEach(p=>{p.vy+=.45*k;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;if(p.y<H+20)alive=true;
+      x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore()});
+    if(alive&&t-t0<4000)requestAnimationFrame(f);else{x.clearRect(0,0,W,H);c.hidden=true}})(t0);
+}
+
+/* hero card image */
+const RC={fire:'#F2582A',water:'#1597D6',air:'#1BA56A',earth:'#D08C00'};
+const SOFT={fire:'#FDE6DD',water:'#DDF0FA',air:'#DCF4E8',earth:'#FBEFD2'};
 async function makeReport(r){
-  const btn=$('dlBtn');btn.disabled=true;btn.textContent='بنجهّز التقرير…';
+  const btn=$('dlBtn');btn.disabled=true;btn.textContent='بنجهّز الكارت…';
   try{await document.fonts.ready}catch(e){}
-  const W=1080,H=2400,c=document.createElement('canvas');c.width=W;c.height=H;
-  const x=c.getContext('2d'),t=T[r.main],acc=RC[r.main];
-  const D=getComputedStyle(document.documentElement).getPropertyValue('--display').trim()||'sans-serif';
-  const B=getComputedStyle(document.documentElement).getPropertyValue('--body').trim()||'sans-serif';
-  x.direction='rtl';
-  x.fillStyle='#111514';x.fillRect(0,0,W,H);
-  // big faint glyph
-  x.save();x.globalAlpha=.07;x.strokeStyle=acc;x.lineWidth=40;x.lineJoin='round';
-  x.translate(W/2-560,140);x.scale(46.6,46.6);x.lineWidth=40/46.6;x.stroke(new Path2D(GLYPH[r.main]));x.restore();
-  x.fillStyle=acc;x.fillRect(0,0,W,14);
-  const R=W-90,L=90;
-  x.textAlign='right';x.fillStyle='#E8EDE9';x.font=`44px ${D}`;x.fillText('مرايتك',R,110);
-  x.textAlign='left';x.fillStyle='#97A29C';x.font=`28px ${B}`;
-  x.fillText(new Date().toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'}),L,106);
+  const cs=getComputedStyle(document.documentElement);
+  const D=cs.getPropertyValue('--display').trim()||'sans-serif',B=cs.getPropertyValue('--body').trim()||'sans-serif';
+  const EM='"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif';
+  const W=1080,t=T[r.main],acc=RC[r.main],soft=SOFT[r.main],INK='#1B2140',MUT='#5D6685';
+  const c=document.createElement('canvas');c.width=W;c.height=3200;const x=c.getContext('2d');x.direction='rtl';
+  const L=110,R=W-110,CX=W/2;
   // photo
-  const cy=290,rad=130;
-  x.beginPath();x.arc(W/2,cy,rad+16,0,Math.PI*2);x.fillStyle=acc;x.fill();
-  x.beginPath();x.arc(W/2,cy,rad+6,0,Math.PI*2);x.fillStyle='#111514';x.fill();
-  x.save();x.beginPath();x.arc(W/2,cy,rad,0,Math.PI*2);x.clip();
-  if(S.photo){const im=await loadImg(S.photo);x.drawImage(im,W/2-rad,cy-rad,rad*2,rad*2)}
-  else{x.fillStyle='#1A1F1D';x.fillRect(W/2-rad,cy-rad,rad*2,rad*2);x.fillStyle=acc;x.font=`150px ${D}`;x.textAlign='center';x.textBaseline='middle';x.fillText(S.name[0],W/2,cy+10);x.textBaseline='alphabetic'}
+  const cy=245,rad=140;
+  x.beginPath();x.arc(CX,cy,rad+14,0,7);x.fillStyle=acc;x.fill();
+  x.beginPath();x.arc(CX,cy,rad+5,0,7);x.fillStyle='#fff';x.fill();
+  x.save();x.beginPath();x.arc(CX,cy,rad,0,7);x.clip();
+  if(S.photo){x.drawImage(await loadImg(S.photo),CX-rad,cy-rad,rad*2,rad*2)}
+  else{x.fillStyle=soft;x.fillRect(CX-rad,cy-rad,rad*2,rad*2);x.fillStyle=acc;x.font=`150px ${D}`;x.textAlign='center';x.textBaseline='middle';x.fillText(S.name[0],CX,cy+12);x.textBaseline='alphabetic'}
   x.restore();
-  x.textAlign='center';x.fillStyle='#97A29C';x.font=`32px ${B}`;x.fillText('تحليل شخصية',W/2,490);
-  x.fillStyle='#E8EDE9';x.font=`bold 64px ${B}`;x.fillText(fit(x,S.name,880),W/2,565);
-  x.fillStyle=acc;x.font=`104px ${D}`;x.fillText(t.title,W/2,690);
-  x.fillStyle='#E8EDE9';x.font=`40px ${B}`;let ty=wrap(x,t.tag,W/2,755,900,52,'center');
-  x.fillStyle='#97A29C';x.font=`30px ${B}`;x.fillText('عنصرك: '+t.name,W/2,ty+8);
-  // meters
-  let y=ty+90;
+  const bx=CX+rad*.78,by=cy+rad*.72;
+  x.beginPath();x.arc(bx,by,62,0,7);x.fillStyle='#fff';x.fill();x.lineWidth=6;x.strokeStyle=acc;x.stroke();
+  x.textAlign='center';x.textBaseline='middle';x.font=`72px ${EM}`;x.fillText(t.animal,bx,by+4);x.textBaseline='alphabetic';
+  x.fillStyle=acc;x.font=`bold 30px ${B}`;x.fillText('كارت البطل',CX,70);
+  x.fillStyle=INK;x.font=`bold 60px ${B}`;x.fillText(fit(x,S.name,820),CX,485);
+  x.fillStyle=acc;x.font=`100px ${D}`;x.fillText(t.title,CX,610);
+  x.fillStyle=INK;x.font=`38px ${B}`;let y=wrap(x,t.tag,CX,680,800,52,'center');
+  // stats
+  y+=30;x.textAlign='right';x.fillStyle=INK;x.font=`bold 40px ${B}`;x.fillText('قدراتك',R,y);y+=60;
   r.rank.forEach(e=>{
-    x.textAlign='right';x.fillStyle='#E8EDE9';x.font=`500 32px ${B}`;x.fillText(T[e].name,R,y+12);
-    const bx=L+110,bw=R-160-bx;
-    rr(x,bx,y-12,bw,24,12,'#232A27');
-    if(r.pct[e]>0)rr(x,bx+bw*(1-r.pct[e]/100),y-12,bw*r.pct[e]/100,24,12,RC[e]);
-    x.textAlign='left';x.fillStyle='#97A29C';x.font=`30px ${B}`;x.fillText(ar(r.pct[e])+'٪',L,y+12);
-    y+=62});
-  // traits chips
-  y+=20;x.font=`500 32px ${B}`;let cx=R;
-  t.traits.forEach(s=>{const w=x.measureText(s).width+56;
-    x.strokeStyle=acc;x.lineWidth=3;rrs(x,cx-w,y-36,w,60,30);
-    x.textAlign='center';x.fillStyle=acc;x.fillText(s,cx-w/2,y+5);cx-=w+18});
-  // two columns
-  y+=95;const colW=(R-L-40)/2;
-  const e1=section(x,'نقط قوتك',t.strong,R,y,colW,acc,B);
-  const e2=section(x,'خد بالك من',t.watch,R-colW-40,y,colW,acc,B);
-  // advice block
-  y=Math.max(e1,e2)+10;rr(x,L,y,R-L,170,24,acc);
-  x.textAlign='right';x.fillStyle='rgba(255,255,255,.85)';x.font=`500 28px ${B}`;x.fillText('نصيحتك',R-36,y+52);
-  x.fillStyle='#fff';x.font=`bold 38px ${B}`;wrap(x,t.advice,R-36,y+108,R-L-72,50,'right');
-  x.textAlign='center';x.fillStyle='#5E6964';x.font=`26px ${B}`;const endY=Math.max(1920,y+170+110);x.fillText('مرايتك · اختبار العناصر الأربعة',W/2,endY-40);
-  const out=document.createElement('canvas');out.width=W;out.height=endY;out.getContext('2d').drawImage(c,0,0);
+    x.textAlign='right';x.fillStyle=INK;x.font=`bold 32px ${B}`;x.fillText(T[e].stat,R,y+12);
+    const sx=L+100,sw=R-170-sx;rr(x,sx,y-14,sw,30,15,'#EDF1F8');
+    if(r.pct[e]>0)rr(x,sx+sw*(1-r.pct[e]/100),y-14,Math.max(30,sw*r.pct[e]/100),30,15,RC[e]);
+    x.textAlign='left';x.fillStyle=INK;x.font=`bold 32px ${B}`;x.fillText(ar(r.pct[e])+'٪',L,y+12);y+=62});
+  // superpower
+  y+=20;const pw=boxText(x,t.power,R-L-80,B,36,50);
+  rr(x,L,y,R-L,pw+130,28,soft);x.lineWidth=4;x.strokeStyle=acc;rrs(x,L,y,R-L,pw+130,28);
+  x.textAlign='right';x.fillStyle=acc;x.font=`bold 34px ${B}`;x.fillText('⚡ قوتك الخارقة',R-40,y+58);
+  x.fillStyle=INK;x.font=`500 36px ${B}`;wrap(x,t.power,R-40,y+110,R-L-80,50,'right');y+=pw+190;
+  // traits
+  x.textAlign='right';x.fillStyle=INK;x.font=`bold 40px ${B}`;x.fillText('صفاتك',R,y);y+=40;
+  y=chipRow(x,t.traits,R,y,R-L,soft,INK,B)+90;
+  // shine
+  x.textAlign='right';x.fillStyle=INK;x.font=`bold 40px ${B}`;x.fillText('🌟 حاجات بتميّزك',R,y);y+=58;
+  x.font=`34px ${B}`;
+  t.shine.forEach(s=>{x.beginPath();x.arc(R-10,y-12,9,0,7);x.fillStyle=acc;x.fill();x.fillStyle=INK;y=wrap(x,s,R-36,y,R-L-36,46,'right')+8});
+  // future
+  y+=24;x.textAlign='right';x.fillStyle=INK;x.font=`bold 40px ${B}`;x.fillText('🚀 ممكن تبقى لما تكبر',R,y);y+=40;
+  y=chipRow(x,t.future,R,y,R-L,'#EDF1F8',INK,B)+50;
+  // challenge
+  const ch=boxText(x,t.challenge,R-L-80,B,34,46);
+  x.setLineDash([16,12]);x.lineWidth=4;x.strokeStyle=acc;rrs(x,L,y,R-L,ch+120,28);x.setLineDash([]);
+  x.textAlign='right';x.fillStyle=acc;x.font=`bold 32px ${B}`;x.fillText('🏅 تحدّي الأسبوع',R-40,y+56);
+  x.fillStyle=INK;x.font=`34px ${B}`;wrap(x,t.challenge,R-40,y+106,R-L-80,46,'right');y+=ch+190;
+  // motto
+  x.textAlign='center';x.fillStyle=MUT;x.font=`28px ${B}`;x.fillText('شعارك',CX,y);
+  x.fillStyle=acc;x.font=`76px ${D}`;x.fillText('"'+t.motto+'"',CX,y+90);y+=150;
+  x.fillStyle=MUT;x.font=`26px ${B}`;
+  x.fillText('مرايتك · '+new Date().toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'}),CX,y);
+  const contentH=y+50;
+  // compose: colored frame + white card
+  const M=50,TOP=70,H=contentH+TOP+M+30;
+  const out=document.createElement('canvas');out.width=W;out.height=H;const o=out.getContext('2d');
+  o.fillStyle=acc;o.fillRect(0,0,W,H);
+  o.fillStyle='rgba(255,255,255,.14)';[[W-80,120,220],[90,H-160,180],[W-140,H*.55,90],[120,H*.3,60]].forEach(([a,b,rr_])=>{o.beginPath();o.arc(a,b,rr_,0,7);o.fill()});
+  rr(o,M,TOP-30,W-2*M,contentH+30,48,'#fff');
+  o.drawImage(c,0,0,W,contentH,0,TOP,W,contentH);
   const data=out.toDataURL('image/png');
-  btn.disabled=false;btn.textContent='حمّل التقرير كصورة';
+  btn.disabled=false;btn.textContent='حمّل كارت البطل';
   const file='مرايتك-'+S.name.replace(/\s+/g,'-')+'.png';
   if(window.Android&&Android.saveImage){
     const ok=Android.saveImage(data.split(',')[1],file);
-    toast(ok?'اتحفظ التقرير في الصور ✓':'معرفناش نحفظ الصورة، جرّب تاني');
-    if(ok&&Android.shareImage)showBox(data,true);else showBox(data,false);
-  }else{showBox(data,false);toast('اضغط مطولًا على الصورة واختار حفظ')}
+    toast(ok?'الكارت اتحفظ في الصور ✓':'معرفناش نحفظ الصورة، جرّب تاني');
+    showBox(data,ok&&!!Android.shareImage);
+  }else{showBox(data,false);toast('اضغط مطوّل على الصورة واختار حفظ')}
 }
 function showBox(data,canShare){
   const b=$('reportBox');b.hidden=false;
-  b.innerHTML=`<img src="${data}" alt="تقرير ${esc(S.name)}">`+(canShare?`<button class="btn alt" id="shareBtn" type="button">شارك التقرير</button>`:`<p class="hint">اضغط مطولًا على الصورة واختار "حفظ الصورة".</p>`);
+  b.innerHTML=`<img src="${data}" alt="كارت البطل بتاع ${esc(S.name)}">`+(canShare?`<button class="btn alt" id="shareBtn" type="button">ابعته لصحابك</button>`:`<p class="hint">اضغط مطوّل على الصورة واختار "حفظ الصورة".</p>`);
   if(canShare)$('shareBtn').onclick=()=>Android.shareImage(data.split(',')[1]);
+  b.scrollIntoView({behavior:'smooth',block:'center'});
 }
-function section(x,title,items,right,y,w,acc,B){
-  x.textAlign='right';x.fillStyle=acc;x.font=`bold 36px ${B}`;x.fillText(title,right,y);
-  let yy=y+60;x.font=`30px ${B}`;
-  items.forEach(s=>{x.fillStyle=acc;x.beginPath();x.arc(right-8,yy-10,6,0,Math.PI*2);x.fill();
-    x.fillStyle='#E8EDE9';yy=wrap(x,s,right-28,yy,w-28,42,'right')+20});
-  return yy;
-}
-function wrap(x,text,px,py,maxW,lh,align){
-  x.textAlign=align;const words=text.split(' ');let line='',y=py;
-  for(const w of words){const test=line?line+' '+w:w;
-    if(x.measureText(test).width>maxW&&line){x.fillText(line,px,y);line=w;y+=lh}else line=test}
-  x.fillText(line,px,y);return y+lh}
+function lines(x,text,maxW){const out=[];let line='';for(const w of text.split(' ')){const s=line?line+' '+w:w;if(x.measureText(s).width>maxW&&line){out.push(line);line=w}else line=s}out.push(line);return out}
+function boxText(x,text,maxW,B,size,lh){x.font=`500 ${size}px ${B}`;return lines(x,text,maxW).length*lh}
+function wrap(x,text,px,py,maxW,lh,align){x.textAlign=align;const ls=lines(x,text,maxW);ls.forEach((l,i)=>x.fillText(l,px,py+i*lh));return py+ls.length*lh}
+function chipRow(x,items,right,y,maxW,bg,fg,B){
+  x.font=`bold 32px ${B}`;let cx=right;const h=62,gap=16;
+  items.forEach(s=>{const w=x.measureText(s).width+60;if(right-cx+w>maxW){cx=right;y+=h+gap}
+    rr(x,cx-w,y,w,h,31,bg);x.textAlign='center';x.fillStyle=fg;x.fillText(s,cx-w/2,y+43);cx-=w+gap});
+  return y+h}
 function fit(x,s,max){while(x.measureText(s).width>max&&s.length>1)s=s.slice(0,-1);return s}
 function rp(x,a,b,w,h,r){x.beginPath();if(x.roundRect)x.roundRect(a,b,w,h,r);else{r=Math.min(r,h/2,w/2);x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}}
 function rr(x,a,b,w,h,r,f){rp(x,a,b,w,h,r);x.fillStyle=f;x.fill()}
 function rrs(x,a,b,w,h,r){rp(x,a,b,w,h,r);x.stroke()}
 function loadImg(src){return new Promise(res=>{const i=new Image();i.onload=()=>res(i);i.src=src})}
 
-/* keep progress across live updates */
-window.claude?.hot?.snapshot?.(()=>({name:S.name,i:S.i,answers:S.answers,orders:S.orders,screen:S.screen}));
-function start(d){if(d&&d.name){Object.assign(S,d);nameIn.value=S.name;refreshStart();go(S.screen)}}
+window.claude?.hot?.snapshot?.(()=>({name:S.name,i:S.i,answers:S.answers,orders:S.orders,screen:S.screen==='think'?'result':S.screen}));
+function start(d){if(d&&d.name&&d.orders&&d.orders.length===Q.length){Object.assign(S,d);nameIn.value=S.name;refreshStart();go(S.screen)}}
 window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
 </script>
 
